@@ -1,0 +1,145 @@
+'scopeName': 'source.metascript'
+'name': 'Metascript'
+'fileTypes': [
+  'mjs'
+]
+'foldingStartMarker': '^[^\\n\\r]*(([=-]>)|if|else|try|finally|catch|loop|\\{|\\[)(\\s*)(;.*)?$'
+'foldingStopMarker': '^[^\\n\\r]*(\\}|\\]|else|catch|finally)(\\s*)(;.*)?$'
+'patterns': [
+  {
+    'begin': '\'\'\''
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.definition.string.begin.metascript'
+    'end': '\'\'\''
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.string.end.metascript'
+    'name': 'string.quoted.heredoc.metascript'
+  }
+  {
+    'begin': '"""'
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.definition.string.begin.metascript'
+    'end': '"""'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.string.end.metascript'
+    'name': 'string.quoted.double.heredoc.metascript'
+  }
+  {
+    'begin': '"'
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.definition.string.begin.metascript'
+    'end': '"'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.string.end.metascript'
+    'name': 'string.quoted.double.metascript'
+    'patterns': [
+      {
+        'match': '\\\\(x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]|37[0-7]?|[4-7][0-7]?|.)'
+        'name': 'constant.character.escape.metascript'
+      }
+    ]
+  }
+  {
+    'begin': '\''
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.definition.string.begin.metascript'
+    'end': '\''
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.string.end.metascript'
+    'name': 'string.quoted.double.metascript'
+    'patterns': [
+      {
+        'match': '\\\\(x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]|37[0-7]?|[4-7][0-7]?|.)'
+        'name': 'constant.character.escape.metascript'
+      }
+    ]
+  }
+  {
+    'match': ';.*$'
+    'name': 'comment.metascript'
+  }
+  {
+    'match': '#(\\p{Word})(#|\\p{Word}|([-][\>]?))*'
+    'name': 'entity.name.metascript'
+  }
+  {
+    'match': '[\\\\\\+\\*\\-\\/<>\\:\\~\\|\\^\\#\\@\\!\\?\\&\\=\\~\\`\\%]+'
+    'name': 'keyword.operator.metascript'
+  }
+  {
+    'match': '(?:\\b)(abstract|as|boolean|byte|char|class|const|debugger|default|delete|double|enum|export|extends|final|float|function|implements|import|in|instanceof|int|interface|is|long|namespace|native|new|package|private|protected|public|short|static|super|synchronized|throws|transient|typeof|use|volatile|with)(?:\\b)'
+    'name': 'keyword.reserved.metascript'
+  }
+  {
+    'match': '(?:\\b)(loop|break|case|catch|continue|default|do|else|finally|for|goto|if|return|switch|throw|try|while|yield)(?:\\b)'
+    'name': 'keyword.control.metascript'
+  }
+  {
+    'match': '(?:\\b)(const|var|void|let)(?:\\b)'
+    'name': 'storage.modifier.metascript'
+  }
+  {
+    'match': '(?:\\b)(true)(?:\\b)'
+    'name': 'constant.language.boolean.true.metascript'
+  }
+  {
+    'match': '(?:\\b)(false)(?:\\b)'
+    'name': 'constant.language.boolean.false.metascript'
+  }
+  {
+    'match': '(?:\\b)(null)(?:\\b)'
+    'name': 'constant.language.null.metascript'
+  }
+  {
+    'match': '(?:\\b)(Infinity|NaN|undefined)(?:\\b)'
+    'name': 'constant.language.metascript'
+  }
+  {
+    'match': '(?<!\\$)\\b((0([box])[0-9a-fA-F]+)|([0-9]+(\\.[0-9]+)?(e[+\\-]?[0-9]+)?))\\b'
+    'name': 'constant.numeric.metascript'
+  }
+  {
+    'match': '(?:\\b)(this)(?:\\b)'
+    'name': 'storage.function.metascript'
+  }
+  {
+    'match': ','
+    'name': 'meta.delimiter.comma.metascript'
+  }
+  {
+    'match': '\\{|\\}'
+    'name': 'meta.brace.curly.metascript'
+  }
+  {
+    'match': '\\(|\\)'
+    'name': 'meta.brace.round.metascript'
+  }
+  {
+    'match': '\\[|\\]'
+    'name': 'meta.brace.square.metascript'
+  }
+  {
+    'match': '(\\b)((\\p{Alpha}|$|([-][\>]?))(\\p{Word}|$|([-][\>]?))*)([\\s\\n\\r]*:)'
+    'captures':
+      '2':
+        'name': 'constant.language.metascript'
+      #'3':
+      #  'name': 'keyword.operator.metascript'
+  }
+  {
+    'match': '(\\.[\\s\\n\\r]*)((\\p{Alpha}|$|([-][\>]?))(\\p{Word}|$|([-][\>]?))*)'
+    'captures':
+      '2':
+        'name': 'constant.language.metascript'
+      #'1':
+      #  'name': 'keyword.operator.metascript'
+  }
+]

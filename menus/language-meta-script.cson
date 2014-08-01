@@ -1,0 +1,16 @@
+# See https://atom.io/docs/latest/creating-a-package#menus for more details
+'context-menu':
+  '.overlayer':
+      'Enable language-meta-script': 'language-meta-script:toggle'
+
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'language-meta-script'
+      'submenu': [
+        { 'label': 'Toggle', 'command': 'language-meta-script:toggle' }
+      ]
+    ]
+  }
+]
