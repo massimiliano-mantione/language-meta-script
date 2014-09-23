@@ -9,3 +9,8 @@
 # https://atom.io/docs/latest/advanced/keymaps
 '.workspace':
   'ctrl-alt-m': 'language-meta-script:toggle'
+
+# language specific keybindings
+# requires editor-grammar-scope package (https://atom.io/packages/editor-grammar-scope)
+'.source-metascript':
+  'ctrl-alt-,': 'language-meta-script:run-tests'
