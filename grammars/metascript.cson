@@ -67,47 +67,71 @@
     'name': 'comment.metascript'
   }
   {
-    'match': '#(\\p{Word})(#|\\p{Word}|([-][\>]?))*'
-    'name': 'entity.name.metascript'
-  }
-  {
-    'match': '[\\\\\\+\\*\\-\\/<>\\:\\~\\|\\^\\#\\@\\!\\?\\&\\=\\~\\`\\%]+'
-    'name': 'keyword.operator.metascript'
-  }
-  {
-    'match': '(?:\\b)(abstract|as|boolean|byte|char|class|const|debugger|default|delete|double|enum|export|extends|final|float|function|implements|import|in|instanceof|int|interface|is|long|namespace|native|new|package|private|protected|public|short|static|super|synchronized|throws|transient|typeof|use|volatile|with)(?:\\b)'
+    'match': '(?:\\b)(abstract|as|boolean|byte|char|class|const|debugger|default|delete|double|enum|export|extends)(?![\\->!?])\\b'
     'name': 'keyword.reserved.metascript'
   }
   {
-    'match': '(?:\\b)(loop|break|case|catch|continue|default|do|else|finally|for|goto|if|return|switch|throw|try|while|yield)(?:\\b)'
+    'match': '(?:\\b)(final|float|function|implements|import|in|instanceof|int|interface|is|long)(?![\\->!?])\\b'
+    'name': 'keyword.reserved.metascript'
+  }
+  {
+    'match': '(?:\\b)(namespace|native|package|private|protected|public|short|static|super|synchronized|throws|transient|typeof|use|volatile|with)(?![\\->!?])\\b'
+    'name': 'keyword.reserved.metascript'
+  }
+  {
+    'match': '(?:\\b)(new)(?![\\->!?])\\b'
+    'name': 'keyword.control.new.metascript'
+  }
+  {
+    'match': '(?:\\b)(catch|finally|throw|try)(?![\\->!?])\\b'
+    'name': 'keyword.control.exception.metascript'
+  }
+  {
+    'match': '(?:\\b)(loop|break|continue|while|yield)(?![\\->!?])\\b'
+    'name': 'keyword.control.repeat.metascript'
+  }
+  {
+    'match': '\\b(give!|next!)'
+    'name': 'keyword.control.repeat.metascript'
+  }
+  {
+    'match': '(?:\\b)(case|else|if)(?![\\->!?])\\b'
+    'name': 'keyword.control.conditional.metascript'
+  }
+  {
+    'match': '(?:\\b)(default|do|for|goto|return|switch)(?![\\->!?])\\b'
     'name': 'keyword.control.metascript'
   }
   {
-    'match': '(?:\\b)(const|var|void|let)(?:\\b)'
+    'match': '(?:\\b)(const|var|void|let|fun)(?![\\->!?])\\b'
     'name': 'storage.modifier.metascript'
   }
   {
-    'match': '(?:\\b)(true)(?:\\b)'
+    'match': '\\b(true)(?![\\->!?])\\b'
     'name': 'constant.language.boolean.true.metascript'
   }
   {
-    'match': '(?:\\b)(false)(?:\\b)'
+    'match': '(?:\\b)(false)(?![\\->!?])\\b'
     'name': 'constant.language.boolean.false.metascript'
   }
   {
-    'match': '(?:\\b)(null)(?:\\b)'
+    'match': '(?:\\b)(null)(?![\\->!?])\\b'
     'name': 'constant.language.null.metascript'
   }
   {
-    'match': '(?:\\b)(Infinity|NaN|undefined)(?:\\b)'
+    'match': '(?:\\b)(Infinity|NaN|undefined)(?![\\->!?])\\b'
     'name': 'constant.language.metascript'
+  }
+  {
+    'match': '\\b(require)(?![\\->!?])\\b'
+    'name': 'support.function.metascript'
   }
   {
     'match': '(?<!\\$)\\b((0([box])[0-9a-fA-F]+)|([0-9]+(\\.[0-9]+)?(e[+\\-]?[0-9]+)?))\\b'
     'name': 'constant.numeric.metascript'
   }
   {
-    'match': '(?:\\b)(this)(?:\\b)'
+    'match': '(?:\\b)(this)(?![\\->!?])\\b'
     'name': 'storage.function.metascript'
   }
   {
@@ -127,7 +151,7 @@
     'name': 'meta.brace.square.metascript'
   }
   {
-    'match': '(\\b)((\\p{Alpha}|$|([-][\>]?))(\\p{Word}|$|([-][\>]?))*)([\\s\\n\\r]*:)'
+    'match': '(\\b)((\\p{Alpha}|$|([-][\>]?))(\\p{Word}|$|([-][\>]?))*[?!]?)([\\s\\n\\r]*:)'
     'captures':
       '2':
         'name': 'constant.language.metascript'
@@ -135,11 +159,23 @@
       #  'name': 'keyword.operator.metascript'
   }
   {
-    'match': '(\\.[\\s\\n\\r]*)((\\p{Alpha}|$|([-][\>]?))(\\p{Word}|$|([-][\>]?))*)'
+    'match': '(\\.[\\s\\n\\r]*)((\\p{Alpha}|$|([-][\>]?))(\\p{Word}|$|([-][\>]?))*[?!]?)'
     'captures':
       '2':
         'name': 'constant.language.metascript'
       #'1':
       #  'name': 'keyword.operator.metascript'
+  }
+  {
+    'match': '#(\\p{Word}|[\\->])+[!?]?'
+    'name': 'constant.other.symbol.metascript'
+  }
+  {
+    'match': '(#|\\p{Word})(\\p{Word}|[\\->])*[!?]?'
+    'name': 'entity.name.metascript'
+  }
+  {
+    'match': '[\\\\\\+\\*\\-\\/<>\\:\\~\\|\\^\\#\\@\\!\\?\\&\\=\\~\\`\\%][\\.\\\\\\+\\*\\-\\/<>\\:\\~\\|\\^\\#\\@\\!\\?\\&\\=\\~\\`\\%]*'
+    'name': 'keyword.operator.metascript'
   }
 ]
