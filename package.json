@@ -3,12 +3,16 @@
   "main": "./lib/language-meta-script",
   "version": "0.0.1",
   "description": "Metascript language support in Atom",
-  "activationEvents": ["language-meta-script:toggle"],
+  "activationEvents": [
+    "language-meta-script:toggle",
+    "language-meta-script:run-tests"
+  ],
   "repository": "https://github.com/atom/language-meta-script",
   "license": "MIT",
   "engines": {
     "atom": ">0.50.0"
   },
   "dependencies": {
+    "ansi-html-stream": "0.0.3"
   }
 }
