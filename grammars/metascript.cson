@@ -123,7 +123,7 @@
     'name': 'constant.language.metascript'
   }
   {
-    'match': '\\b(require)(?![\\->!?])\\b'
+    'match': '\\b(require|parseInt|parse-int)(?![\\->!?])\\b'
     'name': 'support.function.metascript'
   }
   {
