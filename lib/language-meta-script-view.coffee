@@ -2,9 +2,17 @@
 {dirname, join} = require 'path'
 {existsSync} = require 'fs'
 
-addLinks = (text) ->
-  text.replace /\bat\s+.+?\s+\((.+?)\:(\d+):(\d+)\)/g, (whole, fname, line, column) ->
+stackTracePatterns = [
+  /\bat\s+.+?\s+\((.+?)\:(\d+):(\d+)\)/g
+  /\bat ([^\n(]+?)\:(\d+):(\d+)/g
+]
+
+addLinksForPattern = (text, pattern) ->
+  text.replace pattern, (whole, fname, line, column) ->
     "<a data-file='#{fname}' data-line='#{line}' data-column='#{column}'>#{whole}</a>"
+
+addLinks = (text) ->
+  stackTracePatterns.reduce addLinksForPattern, text
 
 packageRootOf = (filename) ->
   prev = undefined
