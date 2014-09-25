@@ -4,8 +4,8 @@
   "version": "0.0.1",
   "description": "Metascript language support in Atom",
   "activationEvents": [
-    "language-meta-script:toggle",
-    "language-meta-script:run-tests"
+    "meta-script-test-view:toggle",
+    "meta-script-test-view:run-tests-for-active-package",
   ],
   "repository": "https://github.com/atom/language-meta-script",
   "license": "MIT",

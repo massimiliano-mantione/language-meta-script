@@ -23,8 +23,8 @@ class LanguageMetaScriptView extends View
         @pre '', class: 'build-output', outlet: 'output'
 
   initialize: (serializeState) ->
-    atom.workspaceView.command "language-meta-script:toggle", => @toggle()
-    atom.workspaceView.command "language-meta-script:run-tests", => @runTests()
+    atom.workspaceView.command "meta-script-test-view:toggle", => @toggle()
+    atom.workspaceView.command "meta-script-test-view:run-tests-for-active-package", => @runTests()
     @subscribe @output, 'click', 'a', @onOutputClick
 
   # Returns an object that can be retrieved when package is activated
