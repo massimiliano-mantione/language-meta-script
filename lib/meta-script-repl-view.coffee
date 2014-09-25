@@ -44,31 +44,28 @@ class MetaScriptReplView extends View
 
   repl: null
 
-  socket: null
-
   eval: ->
     @toggle() unless @hasParent()
     activeEditor = atom.workspace.getActiveTextEditor()
     return unless activeEditor
     code = activeEditor.getSelectedText()
     if @repl
-      @socket.write code
+      @send code
     else
       activePackage = getActivePackage()
       @repl = @spawnReplForPackage activePackage, =>
+        {inspect} = require 'util'
         packageName = (require 'path').basename activePackage
         @title.text "mjsish on package *#{packageName}*"
-        {connect} = require 'net'
-        @socket = connect 15542, =>
-          console.log 'mjsish socket connected'
-          @socket.write code
+        @repl.on 'message', (message) =>
+          console.log 'mjsish message:', message
+          @output.text inspect message
+        process.nextTick =>
+          @send code
           code = null
-        @socket.on 'error', (err) =>
-          console.log 'mjsish socket error:', err
-        @socket.on 'data', (data) =>
-          @output.text data
-        @socket.on 'close', =>
-          console.log 'mjsish socket closed'
+
+  send: (message) ->
+    @repl.send message
 
   killRepl: ->
     return unless @repl
@@ -89,7 +86,7 @@ class MetaScriptReplView extends View
     ansi = require('ansi-html-stream')
     executable = @mjsishPath()
     console.log "spawning `%s' for package `%s'", executable, packageDir
-    mjsish = spawn executable, ['--port', '15542'], {cwd: packageDir}
+    mjsish = spawn executable, ['--ipc'], {cwd: packageDir, stdio: [undefined, undefined, undefined, 'ipc']}
     mjsish.on 'error', (err) =>
       console.warn 'mjsish error:', err
     mjsish.on 'close', (exitCode) =>
@@ -97,10 +94,12 @@ class MetaScriptReplView extends View
     stream = ansi({ chunked: false })
     mjsish.stdout.pipe stream
     mjsish.stderr.pipe stream
+    callback = (data) =>
+      callback = (data) =>
+        @onOutputData data
+      callback(data)
+      onProcess()
+      onProcess = null
     stream.on 'data', (data) =>
-      cb = onProcess
-      if cb
-        onProcess = null
-        cb()
-      @onOutputData data
+      callback data
     mjsish
