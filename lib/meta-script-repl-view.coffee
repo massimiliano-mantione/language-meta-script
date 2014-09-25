@@ -1,3 +1,10 @@
+# TODO: distinguish between results and errors
+# TODO: ship mjsish with plugin
+# TODO: open separate repls for different packages and eval on correct one
+# TODO: clickable stack trace elements
+# TODO: show javascript code in a separate pane
+# TODO: compile snippet with correct file so relative #metaimports can be resolved correctly
+
 {View} = require 'atom'
 {getActivePackage} = require './packages'
 
