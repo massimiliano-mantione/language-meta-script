@@ -6,6 +6,8 @@
   "activationEvents": [
     "meta-script-test-view:toggle",
     "meta-script-test-view:run-tests-for-active-package",
+    "meta-script-repl:toggle",
+    "meta-script-repl:eval"
   ],
   "repository": "https://github.com/atom/language-meta-script",
   "license": "MIT",
