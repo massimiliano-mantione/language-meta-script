@@ -1,12 +1,12 @@
 # TODO: ship mjsish with plugin
 # TODO: open separate repls for different packages and eval on correct one
-# TODO: clickable stack trace elements
 # TODO: show javascript code in a separate pane
 # TODO: compile snippet with correct file so relative #metaimports can be resolved correctly
 
 {View} = require 'atom'
 {getActivePackage} = require './packages'
 {inspect} = require 'util'
+{addLinks, onClickStackTrace} = require './stack-trace-links'
 
 module.exports =
 class MetaScriptReplView extends View
@@ -20,6 +20,7 @@ class MetaScriptReplView extends View
   initialize: (serializeState) ->
     atom.workspaceView.command "meta-script-repl:toggle", => @toggle()
     atom.workspaceView.command "meta-script-repl:eval", => @eval()
+    @subscribe @output, 'click', 'a', onClickStackTrace
 
   serialize: ->
 
@@ -75,7 +76,8 @@ class MetaScriptReplView extends View
       when 'evaluation-result'
         @output.text message.result
       when 'evaluation-error'
-        @output.text message.error
+        @output.text ''
+        @output.append addLinks message.error
         @output.addClass 'error'
       else
         @output.text inspect message
