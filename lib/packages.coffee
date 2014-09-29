@@ -11,10 +11,11 @@ packageRootOf = (filename) ->
     cur = dirname cur
   dir
 
-module.exports =
-  getActivePackage: ->
-    editorPath = atom.workspace.getActiveTextEditor()?.getBuffer().getPath()
-    if editorPath
-      packageRootOf editorPath
-    else
-      undefined
+getActivePackage = ->
+  editorPath = atom.workspace.getActiveTextEditor()?.getBuffer().getPath()
+  if editorPath
+    packageRootOf editorPath
+  else
+    undefined
+
+module.exports = {packageRootOf, getActivePackage}

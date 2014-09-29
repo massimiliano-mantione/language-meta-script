@@ -1,10 +1,10 @@
+# TODO: compile snippet with correct file so relative #metaimports can be resolved correctly
 # TODO: ship mjsish with plugin
 # TODO: open separate repls for different packages and eval on correct one
 # TODO: show javascript code in a separate pane
-# TODO: compile snippet with correct file so relative #metaimports can be resolved correctly
 
 {View} = require 'atom'
-{getActivePackage} = require './packages'
+{packageRootOf} = require './packages'
 {inspect} = require 'util'
 {addLinks, onClickStackTrace} = require './stack-trace-links'
 
@@ -53,20 +53,23 @@ class MetaScriptReplView extends View
     activeEditor = atom.workspace.getActiveTextEditor()
     return unless activeEditor
     code = activeEditor.getSelectedText()
+    filename = activeEditor.getBuffer().getPath()
+    request = {code, filename}
     if @repl
-      @send code
+      @send request
     else
-      activePackage = getActivePackage()
+      activePackage = packageRootOf filename
       @repl = @spawnReplForPackage activePackage, =>
         packageName = (require 'path').basename activePackage
         @title.text "mjsish on package *#{packageName}*"
         @repl.on 'message', (message) =>
           @onReplMessage message
         process.nextTick =>
-          @send code
-          code = null
+          @send request
+          request = null
 
   send: (message) ->
+    console.log "mjsish request:", message
     @repl.send message
 
   onReplMessage: (message) ->
