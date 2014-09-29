@@ -1,4 +1,3 @@
-# TODO: distinguish between results and errors
 # TODO: ship mjsish with plugin
 # TODO: open separate repls for different packages and eval on correct one
 # TODO: clickable stack trace elements
@@ -7,6 +6,7 @@
 
 {View} = require 'atom'
 {getActivePackage} = require './packages'
+{inspect} = require 'util'
 
 module.exports =
 class MetaScriptReplView extends View
@@ -29,8 +29,11 @@ class MetaScriptReplView extends View
 
   reset: ->
     @title.text 'Ready'
-    @title.removeClass('success error warning')
+    @clearStatusClasses @title
     @output.text ''
+
+  clearStatusClasses: (node) ->
+    node.removeClass('success error warning')
 
   toggle: ->
     if @hasParent()
@@ -54,18 +57,29 @@ class MetaScriptReplView extends View
     else
       activePackage = getActivePackage()
       @repl = @spawnReplForPackage activePackage, =>
-        {inspect} = require 'util'
         packageName = (require 'path').basename activePackage
         @title.text "mjsish on package *#{packageName}*"
         @repl.on 'message', (message) =>
-          console.log 'mjsish message:', message
-          @output.text inspect message
+          @onReplMessage message
         process.nextTick =>
           @send code
           code = null
 
   send: (message) ->
     @repl.send message
+
+  onReplMessage: (message) ->
+    console.log 'mjsish message:', message
+    @clearStatusClasses @output
+    switch message.intent
+      when 'evaluation-result'
+        @output.text message.result
+      when 'evaluation-error'
+        @output.text message.error
+        @output.addClass 'error'
+      else
+        @output.text inspect message
+        @output.addClass 'warning'
 
   killRepl: ->
     return unless @repl
