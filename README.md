@@ -6,7 +6,8 @@ Metascript support for the atom editor.
 
 Keyboard shortcut                    | Description
 -------------------------------------|-------------------------------
-<kbd>ctrl-alt-,</kbd> | Run the tests for the current package
-<kbd>ctrl-alt-x</kbd> | Evaluate selected region
+<kbd>ctrl-alt-,</kbd> | Run the tests for the current package.
+<kbd>ctrl-alt-x</kbd> | Evaluate selected region.
 <kbd>ctrl-alt-m t</kbd> | Toggle test view.
 <kbd>ctrl-alt-m r</kbd> | Toggle REPL view.
+<kbd>alt-=</kbd> | Toggle folding at current indent level.
