@@ -99,6 +99,10 @@
     'name': 'keyword.control.conditional.metascript'
   }
   {
+    'match': '\\bdo!'
+    'name': 'keyword.control.metascript'
+  }
+  {
     'match': '(?:\\b)(default|do|for|goto|return|switch)(?![\\->!?])\\b'
     'name': 'keyword.control.metascript'
   }

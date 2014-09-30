@@ -1,17 +1,6 @@
 {View} = require 'atom'
 {getActivePackage} = require './packages'
-
-stackTracePatterns = [
-  /\bat\s+.+?\s+\((.+?)\:(\d+):(\d+)\)/g
-  /\bat ([^\n(]+?)\:(\d+):(\d+)/g
-]
-
-addLinksForPattern = (text, pattern) ->
-  text.replace pattern, (whole, fname, line, column) ->
-    "<a data-file='#{fname}' data-line='#{line}' data-column='#{column}'>#{whole}</a>"
-
-addLinks = (text) ->
-  stackTracePatterns.reduce addLinksForPattern, text
+{addLinks, onClickStackTrace} = require './stack-trace-links'
 
 module.exports =
 class LanguageMetaScriptView extends View
@@ -25,7 +14,7 @@ class LanguageMetaScriptView extends View
   initialize: (serializeState) ->
     atom.workspaceView.command "meta-script-test-view:toggle", => @toggle()
     atom.workspaceView.command "meta-script-test-view:run-tests-for-active-package", => @runTests()
-    @subscribe @output, 'click', 'a', @onOutputClick
+    @subscribe @output, 'click', 'a', onClickStackTrace
 
   # Returns an object that can be retrieved when package is activated
   serialize: ->
@@ -59,12 +48,6 @@ class LanguageMetaScriptView extends View
   onBuildFinished: (success) ->
     @title.text(if success then 'Test succeeded.' else 'Test failed.')
     @title.addClass(if success then 'success' else 'error')
-
-  onOutputClick: (e) ->
-    {file, line, column} = e.currentTarget?.dataset
-    if file
-      atom.workspace.open(file).then (editor) =>
-        editor.setCursorBufferPosition [line - 1, column - 1]
 
   npmTest: (packageDir) ->
     {spawn} = require('child_process')

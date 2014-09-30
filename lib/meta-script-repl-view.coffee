@@ -1,5 +1,12 @@
+# TODO: compile snippet with correct file so relative #metaimports can be resolved correctly
+# TODO: ship mjsish with plugin
+# TODO: open separate repls for different packages and eval on correct one
+# TODO: show javascript code in a separate pane
+
 {View} = require 'atom'
-{getActivePackage} = require './packages'
+{packageRootOf} = require './packages'
+{inspect} = require 'util'
+{addLinks, onClickStackTrace} = require './stack-trace-links'
 
 module.exports =
 class MetaScriptReplView extends View
@@ -13,6 +20,7 @@ class MetaScriptReplView extends View
   initialize: (serializeState) ->
     atom.workspaceView.command "meta-script-repl:toggle", => @toggle()
     atom.workspaceView.command "meta-script-repl:eval", => @eval()
+    @subscribe @output, 'click', 'a', onClickStackTrace
 
   serialize: ->
 
@@ -22,8 +30,11 @@ class MetaScriptReplView extends View
 
   reset: ->
     @title.text 'Ready'
-    @title.removeClass('success error warning')
+    @clearStatusClasses @title
     @output.text ''
+
+  clearStatusClasses: (node) ->
+    node.removeClass('success error warning')
 
   toggle: ->
     if @hasParent()
@@ -37,31 +48,43 @@ class MetaScriptReplView extends View
 
   repl: null
 
-  socket: null
-
   eval: ->
     @toggle() unless @hasParent()
     activeEditor = atom.workspace.getActiveTextEditor()
     return unless activeEditor
     code = activeEditor.getSelectedText()
+    filename = activeEditor.getBuffer().getPath()
+    request = {code, filename}
     if @repl
-      @socket.write code
+      @send request
     else
-      activePackage = getActivePackage()
+      activePackage = packageRootOf filename
       @repl = @spawnReplForPackage activePackage, =>
         packageName = (require 'path').basename activePackage
         @title.text "mjsish on package *#{packageName}*"
-        {connect} = require 'net'
-        @socket = connect 15542, =>
-          console.log 'mjsish socket connected'
-          @socket.write code
-          code = null
-        @socket.on 'error', (err) =>
-          console.log 'mjsish socket error:', err
-        @socket.on 'data', (data) =>
-          @output.text data
-        @socket.on 'close', =>
-          console.log 'mjsish socket closed'
+        @repl.on 'message', (message) =>
+          @onReplMessage message
+        process.nextTick =>
+          @send request
+          request = null
+
+  send: (message) ->
+    console.log "mjsish request:", message
+    @repl.send message
+
+  onReplMessage: (message) ->
+    console.log 'mjsish message:', message
+    @clearStatusClasses @output
+    switch message.intent
+      when 'evaluation-result'
+        @output.text message.result
+      when 'evaluation-error'
+        @output.text ''
+        @output.append addLinks message.error
+        @output.addClass 'error'
+      else
+        @output.text inspect message
+        @output.addClass 'warning'
 
   killRepl: ->
     return unless @repl
@@ -82,7 +105,7 @@ class MetaScriptReplView extends View
     ansi = require('ansi-html-stream')
     executable = @mjsishPath()
     console.log "spawning `%s' for package `%s'", executable, packageDir
-    mjsish = spawn executable, ['--port', '15542'], {cwd: packageDir}
+    mjsish = spawn executable, ['--ipc'], {cwd: packageDir, stdio: [undefined, undefined, undefined, 'ipc']}
     mjsish.on 'error', (err) =>
       console.warn 'mjsish error:', err
     mjsish.on 'close', (exitCode) =>
@@ -90,10 +113,12 @@ class MetaScriptReplView extends View
     stream = ansi({ chunked: false })
     mjsish.stdout.pipe stream
     mjsish.stderr.pipe stream
+    callback = (data) =>
+      callback = (data) =>
+        @onOutputData data
+      callback(data)
+      onProcess()
+      onProcess = null
     stream.on 'data', (data) =>
-      cb = onProcess
-      if cb
-        onProcess = null
-        cb()
-      @onOutputData data
+      callback data
     mjsish

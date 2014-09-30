@@ -2,4 +2,3 @@
   'editor':
     'commentStart': ';'
     'increaseIndentPattern': '^[^\\n\\r]*(([=-]>)|if|else|try|finally|catch|loop|\\{|\\[)(\\s*)(;.*)?$'
-    'decreaseIndentPattern': '^[^\\n\\r]*(\\}|\\]|else|catch|finally)(\\s*)(;.*)?$'
