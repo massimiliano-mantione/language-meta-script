@@ -9,7 +9,7 @@ Metascript support for the atom editor.
 3. cd language-metascript && npm install
 4. ln -s \`pwd\` ~/.atom/packages/
 
-You might also want to install the [linter-metascript](../linter-metascript) package for on-the-fly error checking.
+You might also want to install the [linter-metascript](https://github.com/massimiliano-mantione/linter-metascript) package for on-the-fly error checking.
 
 ## Keyboard shortcuts
 
