@@ -11,6 +11,9 @@
   'ctrl-alt-m t': 'meta-script-test-view:toggle'
   'ctrl-alt-m r': 'meta-script-repl:toggle'
 
+'.editor':
+  'alt-=': 'editor:fold-at-indent-level'
+
 # language specific keybindings
 # requires editor-grammar-scope package (https://atom.io/packages/editor-grammar-scope)
 '.source-metascript':

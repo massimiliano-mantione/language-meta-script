@@ -6,7 +6,8 @@ module.exports =
 class LanguageMetaScriptView extends View
   @content: ->
     @div class: 'language-meta-script tool-panel panel-bottom', =>
-      @div class: 'panel-heading', =>
+      @div class: 'tile panel-heading', =>
+        @span class: 'icon-x', click: 'toggle'
         @span 'Ready', outlet: 'title'
       @div class: 'panel-body padded', =>
         @pre '', class: 'build-output', outlet: 'output'

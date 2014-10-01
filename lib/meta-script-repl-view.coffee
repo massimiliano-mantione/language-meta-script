@@ -12,7 +12,8 @@ module.exports =
 class MetaScriptReplView extends View
   @content: ->
     @div class: 'language-meta-script tool-panel panel-bottom', =>
-      @div class: 'panel-heading', =>
+      @div class: 'title panel-heading', =>
+        @span class: 'icon-x', click: 'toggle'
         @span 'Ready', outlet: 'title'
       @div class: 'panel-body padded', =>
         @pre '', class: 'mjsish-output', outlet: 'output'
