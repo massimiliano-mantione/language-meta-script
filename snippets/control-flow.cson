@@ -1,0 +1,15 @@
+'.source.metascript':
+  'if':
+    'prefix': 'if'
+    'body': """
+      if ${1:true}
+        ${2:true}$3
+    """
+  'if/else':
+    'prefix': 'ife'
+    'body': """
+      if ${1:true}
+        ${2:true}
+      else
+        ${3:false}$4
+    """
