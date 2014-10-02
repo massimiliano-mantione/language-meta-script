@@ -1,7 +1,11 @@
 
 stackTracePatterns = [
+  # node stack traces
   /\bat\s+.+?\s+\((.+?)\:(\d+):(\d+)\)/g
   /\bat ([^\n(]+?)\:(\d+):(\d+)/g
+  # phantomjs stack traces
+  /\bat\s+.+?\s+\(file\:\/\/(.+?)\:(\d+)\)/g
+  /\bat\s+file\:\/\/(.+?)\:(\d+)/g
 ]
 
 addLinksForPattern = (text, pattern) ->
