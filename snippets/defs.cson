@@ -1,0 +1,16 @@
+'.source.metascript':
+  'var':
+    'prefix': 'v'
+    'body': 'var ${1:v}$2'
+  'var with initializer':
+    'prefix': 'v='
+    'body': 'var ${1:v} = ${2:42}$3'
+  'const':
+    'prefix': 'c'
+    'body': 'const ${1:c} = ${2:42}$3'
+  'fun':
+    'prefix': 'f'
+    'body': """
+      fun ${1:f} ${2:()} ->
+        ${3:42}$4
+    """

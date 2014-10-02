@@ -1,0 +1,37 @@
+'.source.metascript':
+  'describe':
+    'prefix': 'd'
+    'body': """
+      describe
+        '${1:given}'
+        #->
+          $2
+    """
+  'it':
+    'prefix': 'it'
+    'body': """
+      it
+        '${1:should}'
+        #->
+          $2
+    """
+  'it async':
+    'prefix': 'ita'
+    'body': """
+      it
+        '${1:should}'
+        done ->
+          $2
+    """
+  'before-each':
+    'prefix': 'be'
+    'body': """
+      before-each #->
+        $1
+    """
+  'before-each':
+    'prefix': 'bea'
+    'body': """
+      before-each done ->
+        $1
+    """

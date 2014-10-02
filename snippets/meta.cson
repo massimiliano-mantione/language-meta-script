@@ -1,0 +1,20 @@
+'.source.metascript':
+  '#external':
+    'prefix': '#e'
+    'body': """
+      #external
+        ${1:describe}$2
+    """
+  '#metaimport':
+    'prefix': '#m'
+    'body': """
+      #metaimport
+        ${1:masakari}
+        ${2:hash-require}$3
+    """
+  '#require':
+    'prefix': '#r'
+    'body': """
+      #require
+        ${1:chai expect}$2
+    """
