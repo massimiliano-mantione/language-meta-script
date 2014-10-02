@@ -33,7 +33,7 @@ class LanguageMetaScriptView extends View
 
   reset: ->
     @title.text 'Ready'
-    @title.removeClass('success error warning')
+    @title.removeClass('text-success text-error')
     @output.text ''
 
   toggle: ->
@@ -47,8 +47,8 @@ class LanguageMetaScriptView extends View
     @output.scrollToBottom()
 
   onBuildFinished: (success) ->
-    @title.text(if success then 'Test succeeded.' else 'Test failed.')
-    @title.addClass(if success then 'success' else 'error')
+    @title.text(if success then 'Test succeeded' else 'Test failed')
+    @title.addClass(if success then 'text-success' else 'text-error')
 
   npmTest: (packageDir) ->
     {spawn} = require('child_process')
