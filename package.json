@@ -10,7 +10,7 @@
     "meta-script-repl:eval",
     "editor:fold-at-indent-level"
   ],
-  "repository": "https://github.com/atom/language-meta-script",
+  "repository": "https://github.com/metascript/language-meta-script",
   "license": "MIT",
   "engines": {
     "atom": ">0.50.0"
