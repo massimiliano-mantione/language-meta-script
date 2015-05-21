@@ -3,13 +3,15 @@
   "main": "./lib/language-meta-script",
   "version": "0.0.2",
   "description": "Metascript language support in Atom",
-  "activationEvents": [
-    "meta-script-test-view:toggle",
-    "meta-script-test-view:run-tests-for-active-package",
-    "meta-script-repl:toggle",
-    "meta-script-repl:eval",
-    "editor:fold-at-indent-level"
-  ],
+  "activationCommands": {
+    "atom-text-editor": [
+      "meta-script-test-view:toggle",
+      "meta-script-test-view:run-tests-for-active-package",
+      "meta-script-repl:toggle",
+      "meta-script-repl:eval",
+      "editor:fold-at-indent-level"
+    ]
+  },
   "repository": "https://github.com/metascript/language-metascript.git",
   "license": "MIT",
   "engines": {
