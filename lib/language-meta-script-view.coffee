@@ -40,7 +40,7 @@ class LanguageMetaScriptView extends View
     if @hasParent()
       @detach()
     else
-      atom.workspaceView.prependToBottom(this)
+      atom.workspace.addBottomPanel(item: this)
 
   onOutputData: (data) ->
     @output.append addLinks data
