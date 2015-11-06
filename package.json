@@ -1,7 +1,7 @@
 {
   "name": "language-meta-script",
   "main": "./lib/language-meta-script",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Metascript language support in Atom",
   "activationCommands": {
     "atom-text-editor": [
