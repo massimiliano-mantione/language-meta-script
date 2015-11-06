@@ -20,7 +20,7 @@ module.exports =
   activate: (state) ->
     @languageMetaScriptView = new LanguageMetaScriptView(state.languageMetaScriptViewState)
     @replView = new MetaScriptReplView(state.replViewState)
-    atom.workspaceView.command "editor:fold-at-indent-level", foldAtIndentLevel
+    atom.commands.add "atom-text-editor", "editor:fold-at-indent-level", foldAtIndentLevel
 
   deactivate: ->
     @languageMetaScriptView.destroy()

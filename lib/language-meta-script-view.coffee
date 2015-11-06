@@ -1,4 +1,4 @@
-{View} = require 'atom'
+{View} = require 'space-pen'
 {getActivePackage} = require './packages'
 {addLinks, onClickStackTrace} = require './stack-trace-links'
 
@@ -13,9 +13,9 @@ class LanguageMetaScriptView extends View
         @pre '', class: 'build-output', outlet: 'output'
 
   initialize: (serializeState) ->
-    atom.workspaceView.command "meta-script-test-view:toggle", => @toggle()
-    atom.workspaceView.command "meta-script-test-view:run-tests-for-active-package", => @runTests()
-    @subscribe @output, 'click', 'a', onClickStackTrace
+    atom.commands.add "atom-text-editor", "meta-script-test-view:toggle", => @toggle()
+    atom.commands.add "atom-text-editor", "meta-script-test-view:run-tests-for-active-package", => @runTests()
+    @output.on 'click', 'a', onClickStackTrace
 
   # Returns an object that can be retrieved when package is activated
   serialize: ->

@@ -3,7 +3,7 @@
 # TODO: open separate repls for different packages and eval on correct one
 # TODO: show javascript code in a separate pane
 
-{View} = require 'atom'
+{View} = require 'space-pen'
 {packageRootOf} = require './packages'
 {inspect} = require 'util'
 {addLinks, onClickStackTrace} = require './stack-trace-links'
@@ -19,9 +19,9 @@ class MetaScriptReplView extends View
         @pre '', class: 'mjsish-output', outlet: 'output'
 
   initialize: (serializeState) ->
-    atom.workspaceView.command "meta-script-repl:toggle", => @toggle()
-    atom.workspaceView.command "meta-script-repl:eval", => @eval()
-    @subscribe @output, 'click', 'a', onClickStackTrace
+    atom.commands.add "atom-text-editor", "meta-script-repl:toggle", => @toggle()
+    atom.commands.add "atom-text-editor", "meta-script-repl:eval", => @eval()
+    @output.on 'click', 'a', onClickStackTrace
 
   serialize: ->
 
